@@ -3,7 +3,7 @@
 ##Yiangos Georgiou
 #
 ###25/11/2016-5/12/2016
- *  
+ *  aaaa
 ###31/10/2016-24/11/2016
  * research on classification algorithms
  * research on papers relate to topic classification
