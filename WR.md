@@ -2,6 +2,15 @@
 ## Data mining on twitter - ADE2016 
 ## Yiangos Georgiou
 #
+### 23/1/2017-30/1/2017
+    * Collecting tweets
+    * Manually categorize topics on categories
+### 11/1/2017-22/1/2017
+    * Collecting tweets
+    * program to analyze and visualize dataset's feature
+### 2/1/2017-10/1/2017
+    * Database creation
+    * Collecting tweets
 ### 11/12/2016-25/12/2016
     * progress report
     * --(final exam's period)
