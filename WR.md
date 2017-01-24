@@ -2,8 +2,12 @@
 ## Data mining on twitter - ADE2016 
 ## Yiangos Georgiou
 #
+
+### 7/12/2016-22/12/2016
+    * --(final exam's period)
 ### 25/11/2016-5/12/2016
-    * aaaa
+    * solution determination
+    * solution plan(steps)
 ### 31/10/2016-24/11/2016
     * research on classification algorithms
     * research on papers relate to topic classification
