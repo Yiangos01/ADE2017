@@ -2,9 +2,11 @@
 ## Data mining on twitter - ADE2016 
 ## Yiangos Georgiou
 #
-
-### 7/12/2016-22/12/2016
+### 11/12/2016-25/12/2016
+    * progress report
     * --(final exam's period)
+### 6/12/2016-10/12/2016
+    * program for collecting twitter Data
 ### 25/11/2016-5/12/2016
     * solution determination
     * solution plan(steps)
