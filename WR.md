@@ -2,6 +2,9 @@
 ## Data mining on twitter - ADE2016 
 ## Yiangos Georgiou
 #
+### 30/1/2017-9/2/2017
+    *Manually categorize topics on categories
+    *working on classification algorithms
 ### 23/1/2017-30/1/2017
     * Collecting tweets
     * Manually categorize topics on categories
