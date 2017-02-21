@@ -5,7 +5,7 @@
 ### 19/1/2017-26/2/2017
     *Visualize dataset's feature
     *starting a map/reduce procedure in order to calculate the values of twitter's feature
-    *Naive Bayes algorith
+    *Naive Bayes algorithm
 ### 10/2/2017-17/2/2017
     *Manually categorize topics
 ### 30/1/2017-9/2/2017
