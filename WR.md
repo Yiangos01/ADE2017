@@ -2,6 +2,9 @@
 ## Data mining on twitter - ADE2016 
 ## Yiangos Georgiou
 #
+### 28/2/2017-7/3/2017
+    *map/reduce procedure for twitter's feature
+    *Text base classification
 ### 19/1/2017-26/2/2017
     *Visualize dataset's feature
     *starting a map/reduce procedure in order to calculate the values of twitter's feature
