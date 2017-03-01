@@ -3,18 +3,18 @@
 ## Yiangos Georgiou
 #
 ### 28/2/2017-7/3/2017
-    *map/reduce procedure for twitter's feature
-    *Text base classification
+    * Map/reduce procedure for twitter's feature
+    * Text base classification
 ### 19/1/2017-26/2/2017
-    *Visualize dataset's feature
-    *starting a map/reduce procedure in order to calculate the values of twitter's feature
-    *Naive Bayes algorithm
-    *Word count map/reduce procedure
+    * Visualize dataset's feature
+    * Starting a map/reduce procedure in order to calculate the values of twitter's feature
+    * Naive Bayes algorithm
+    * Word count map/reduce procedure
 ### 10/2/2017-17/2/2017
-    *Manually categorize topics
+    * Manually categorize topics
 ### 30/1/2017-9/2/2017
-    *Manually categorize topics on categories
-    *working on classification algorithms
+    * Manually categorize topics on categories
+    * Working on classification algorithms
 ### 23/1/2017-30/1/2017
     * Collecting tweets
     * Manually categorize topics on categories
@@ -46,8 +46,8 @@
     * impove map-reduce procedures
 ### 12/9/2016-18/9/2016
     * Grouping London's tweets :
-      * by districts ** using a map-reduce procedure
-      * by map locations ** using a map-reduce procedure
+    * by districts ** using a map-reduce procedure
+    * by map locations ** using a map-reduce procedure
 
 ### 5/9/2016-11/9/2016
      * -
