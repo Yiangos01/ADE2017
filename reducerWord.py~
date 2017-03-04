@@ -30,12 +30,12 @@ for line in sys.stdin:
     else:
         if current_word:
             # write result to STDOUT
-            print '%s\t%s\t%s' % (current_word,current_cat, current_count)
+            print '%s\t%s\t%s' % (current_word,current_cat,current_count)
         current_count = count
         current_word = word
 	current_cat=cat
 
-# do not forget to output the last word if needed!
+#last word!
 if current_word == word:
     print '%s\t%s\t%s' % (current_word,current_cat,current_count)
 

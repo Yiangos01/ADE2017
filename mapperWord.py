@@ -9,7 +9,6 @@ from nltk.stem.porter import PorterStemmer
 
 
 csv.field_size_limit(sys.maxsize)
-category="group interest"
 # input comes from STDIN (standard input)
 stopwords=['.','!',';',',','\'',':','-','_','?','@','#','RT','http','https','(',')','me','like','1','2','3','4','5','6','7','8','9','0']
 data = sys.stdin.readlines()
