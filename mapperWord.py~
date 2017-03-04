@@ -16,17 +16,16 @@ data = sys.stdin.readlines()
 csvreader = csv.reader(data, delimiter='\t')
 for row in csvreader:
 	#Select category 
-	if row[1]==category:
-		# remove leading and trailing whitespace
-		text = row[5].strip().decode('utf-8')
-    		# split the line into words
-		tokens = nltk.word_tokenize(text)
-		text = [ch.lower() for ch in tokens if ch not in stopwords]
-		# increase counters
-		for word in text:
-			# write the results to STDOUT (standard output);
-			try:
-        			print '%s\t%s\t%s' % (word,row[1], 1)
-			except :
-				continue
+	# remove leading and trailing whitespace
+	text = row[5].strip().decode('utf-8')
+    	# split the line into words
+	tokens = nltk.word_tokenize(text)
+	text = [ch.lower() for ch in tokens if ch not in stopwords]
+	# increase counters
+	for word in text:
+		# write the results to STDOUT (standard output);
+		try:
+        		print '%s\t%s\t%s' % (word,row[1], 1)
+		except :
+			continue
 
