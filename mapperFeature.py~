@@ -52,7 +52,7 @@ for row in csvreader:
 			topicRep+=1
 	
 	# increase counters
-	#print text
-	print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (topic,category,row[4],reDepth,reRatio,hashtags,length,exla,quest,link,topicRep)
+	#print text row[4]=userid row[8]=1 if is retweeted else 0
+	print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (topic,category,row[4],text,row[8],reDepth,reRatio,hashtags,length,exla,quest,link,topicRep)
 	
 
