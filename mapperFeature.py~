@@ -13,6 +13,8 @@ csv.field_size_limit(sys.maxsize)
 data = sys.stdin.readlines()
 csvreader = csv.reader(data, delimiter='\t')
 #each record
+word=''
+exclude=['.','!',';',',','\'',':','-','_','?','@','RT','http','https','(',')','me','like','1','2','3','4','5','6','7','8','9','0','[']
 for row in csvreader:
 	# text
 	text = row[5].strip().decode('utf-8')
@@ -51,8 +53,15 @@ for row in csvreader:
 		if word.lower()==topic.lower():
 			topicRep+=1
 	
+	try:
+		listText.remove('RT')
+	except ValueError:
+		continue
 	# increase counters
 	#print text row[4]=userid row[8]=1 if is retweeted else 0
-	print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (topic,category,row[4],text,row[8],reDepth,reRatio,hashtags,length,exla,quest,link,topicRep)
+	lang=row[9].strip()
+
+	print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (topic,category,listText,row[4],row[8],reDepth,reRatio,hashtags,length,exla,quest,link,topicRep)
+	
 	
 
