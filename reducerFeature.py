@@ -25,7 +25,7 @@ lang_diver=1
 words_total=0
 words_diver=1
 text=[]
-exlude=['\"','\'','[',']',' ','@',':','_','-']
+exlude=['\"','\'','[',']',' ','@',':','_','-','1','2','3','4','5','6','7','8','9','0']
 # input comes from STDIN
 for line in sys.stdin:
     # remove leading and trailing whitespace

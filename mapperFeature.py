@@ -14,7 +14,7 @@ data = sys.stdin.readlines()
 csvreader = csv.reader(data, delimiter='\t')
 #each record
 word=''
-exclude=['.','!',';',',','\'',':','-','_','?','@','RT','http','https','(',')','me','like','1','2','3','4','5','6','7','8','9','0','[']
+exclude=['.','!',';',',','\'',':','-','_','?','@','RT','http','https','(',')','me','like','1','2','3','4','5','6','7','8','9','0','[',']','*']
 for row in csvreader:
 	# text
 	text = row[5].strip().decode('utf-8')

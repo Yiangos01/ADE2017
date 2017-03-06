@@ -25,7 +25,7 @@ lang_diver=1
 words_total=0
 words_diver=1
 text=[]
-exlude=['\"','\'','[',']',' ','@',':','_','-']
+exlude=['\"','\'','[',']',' ','@',':','_','-','1','2','3','4','5','6','7','8','9','0']
 # input comes from STDIN
 for line in sys.stdin:
     # remove leading and trailing whitespace
@@ -140,7 +140,7 @@ for line in sys.stdin:
 		for key in Dictionary_lang:
 			lang_diver+=-(float(Dictionary_lang[key])/lang_total)*math.log(float(Dictionary_lang[key])/lang_total,2)
 
-		print '%s\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f' % (topic,cat,aver_depth/total_tweets,aver_ratio/total_tweets,aver_hastags/total_tweets,aver_length/total_tweets,aver_exla/total_tweets,aver_quest/total_tweets,aver_link/total_tweets,aver_topicRep/total_tweets,users_diver,retweeted_diver,hashtags_diver,words_diver)
+		print '%s\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f' % (topic,cat,aver_depth/total_tweets,aver_ratio/total_tweets,aver_hastags/total_tweets,aver_length/total_tweets,aver_exla/total_tweets,aver_quest/total_tweets,aver_link/total_tweets,aver_topicRep/total_tweets,users_diver,retweeted_diver,hashtags_diver,words_diver,lang_diver)
 		#initiate values for new topic	
        		aver_depth=reDepth
 		aver_ratio=reRatio
