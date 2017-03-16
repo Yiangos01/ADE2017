@@ -2,9 +2,12 @@
 ## Data mining on twitter - ADE2016 
 ## Yiangos Georgiou
 #
+### 8/3/2017-16/3/2017
+    * sentiment analysis(VADER)
+    * Naive Bayes algorithm
 ### 28/2/2017-7/3/2017
     * Map/reduce procedure for twitter's feature
-    * Text base classification
+    * Text base classification SGD
 ### 19/1/2017-26/2/2017
     * Visualize dataset's feature
     * Starting a map/reduce procedure in order to calculate the values of twitter's feature
