@@ -4,6 +4,7 @@
 #
 ### 16/3/2017-25/3/2017
     * feature based classification(SVM)
+    * Nayve bayes optimization
 ### 8/3/2017-16/3/2017
     * sentiment analysis(VADER)
     * Naive Bayes algorithm
