@@ -49,8 +49,8 @@ clf = SGDClassifier(n_jobs = -1, n_iter = 80, loss='modified_huber', eta0=0.1, f
 
 pipeline = Pipeline([
     ('vectorizer', HashingVectorizer(non_negative=True,n_features=(2 ** 20))),
-    ('clf', CalibratedClassifierCV(base_estimator=clf, cv=5, method='isotonic'))
+    ('clf', CalibratedClassifierCV(base_estimator=clf, cv=6, method='isotonic'))
 ])
 
-scores = cross_val_score(pipeline, X_train, y_train, cv=5, n_jobs=-1)
+scores = cross_val_score(pipeline, X_train, y_train, cv=6, n_jobs=-1)
 print("score: {:.2f}%".format(sum(scores)/len(scores)*100))
