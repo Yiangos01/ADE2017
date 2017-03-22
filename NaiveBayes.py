@@ -2,6 +2,7 @@ from pandas import DataFrame
 import re
 import numpy
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 from sklearn.cross_validation import KFold
@@ -19,9 +20,9 @@ def build_data_frame(file_name):
 			else:
 				fields = tweet.strip().split('\t')
       	 			line = fields[5]
-				line = re.sub(r"rt", "", line)
+				line = re.sub(r"{rt}", "", line)
 		 	       	line = re.sub(r"http\S+", "", line)
-				line = re.sub(r"([!.'():,]+)", " ", line)
+				line = re.sub(r"([!.'():,?]+)", " ", line)
 				line = re.sub(r"https\S+", "", line)
 		       		line = re.sub(r"(@[a-zA-Z0-9_]+)", "", line)
 		       		line = re.sub(r"([0-9]+)", "", line)
@@ -35,10 +36,12 @@ def build_data_frame(file_name):
 
 if __name__=='__main__':
 	data=build_data_frame('dataset.csv')
-	#data=data.reindex(numpy.random.permutation(data.index)) #shuffle dataset
-	pipeline = Pipeline([('vectorizer',CountVectorizer()),('classifier',MultinomialNB())])
+	#data=data.sample(frac=1) #shuffle dataset
+	pipeline = Pipeline([	('vectorizer',CountVectorizer()),
+				('classifier',MultinomialNB())
+			   ])
 	#Cross-Validating 
-	kfold = KFold(n=len(data),n_folds=6)
+	kfold = KFold(n=len(data),n_folds=10)
 	scores = []
 	for train_ind,test_ind in kfold:
 		train_text = data.iloc[train_ind]['text'].values
@@ -54,5 +57,5 @@ if __name__=='__main__':
 		score = accuracy_score(test_y, predictions)
 		print score
 		scores.append(score)
-print ("Score: {:.2f}".format(sum(scores[2:5])/len(scores[2:5])))
+print ("Score: {:.2f}".format(sum(scores)/len(scores)))
 	
