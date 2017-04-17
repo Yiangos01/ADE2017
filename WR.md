@@ -33,7 +33,7 @@
     * progress report
     * --(final exam's period)
 ### 6/12/2016-10/12/2016
-    * program for collecting twitter Data
+    * collecting twitter Data 
 ### 25/11/2016-5/12/2016
     * solution determination
     * solution plan(steps)
