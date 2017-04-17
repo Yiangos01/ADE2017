@@ -11,9 +11,9 @@ from nltk.stem.porter import PorterStemmer
 csv.field_size_limit(sys.maxsize)
 # input comes from STDIN (standard input)
 stopwords=['.','!',';',',','\'',':','-','_','?','@','#','(',')','1','2','3','4','5','6','7','8','9','0','-','%','$','&','*','+','=','[',']']
-dictionary=['a','for','what','RT','http','https','like','me','you','we','do','have','had','did','who','how','good','fine','morning','night','now','too'
+dictionary=['a','for','what','like','me','you','we','do','have','had','did','who','how','good','fine','morning','night','now','too'
 ,'i','you','if','of','it','the','to','on','this','with','is','off','not','its','be','best','every','no','but','by','our','when','up','out','so'
-,'my','more','from']
+,'my','more','from','is','are','in']
 data = sys.stdin.readlines()
 csvreader = csv.reader(data, delimiter='\t')
 for row in csvreader:
