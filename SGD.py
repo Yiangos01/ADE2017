@@ -9,7 +9,7 @@ from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
-
+from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.linear_model import SGDClassifier
 ###############################################################################
@@ -26,13 +26,13 @@ with open('dataset.csv','rb') as tweets:
 	else:
         	fields = tweet.strip().split('\t')
        		text = fields[5]
+		text = text.lower()
 		text = re.sub(r"rt", "", text)
         	text = re.sub(r"http\S+", "", text)
-		text = re.sub(r"([!.'():,]+)", " ", text)
+		text = re.sub(r"([!.'():,?]+)", " ", text)
 		text = re.sub(r"https\S+", "", text)
         	text = re.sub(r"(@[a-zA-Z0-9_]+)", "", text)
         	text = re.sub(r"([0-9]+)", "", text)
-        	text = text.lower()
         	text = re.sub(r"(.)\1{1,}", r"\1\1", text)
         	if fields[1] == 'live events':
           		y_train.append(0)
@@ -44,13 +44,15 @@ with open('dataset.csv','rb') as tweets:
             		y_train.append(3)
         	X_train.append(text)
 
+
 clf = SGDClassifier(n_jobs = -1, n_iter = 80, loss='modified_huber', eta0=0.1, fit_intercept=True, 
-  l1_ratio=0.01523666894628084, learning_rate='invscaling', penalty='none', power_t=0.3781882994744936, epsilon=0.43278936855286376, alpha=0.4151963461780298)
+  l1_ratio=0.01523666894628084, learning_rate='invscaling', penalty='L1', power_t=0.3781882994744936, epsilon=0.43278936855286376, alpha=0.4151963461780298)
 
 pipeline = Pipeline([
-    ('vectorizer', HashingVectorizer(non_negative=True,n_features=(2 ** 20))),
-    ('clf', CalibratedClassifierCV(base_estimator=clf, cv=6, method='isotonic'))
+    ('vectorizer', HashingVectorizer(non_negative=True,n_features=(2 ** 18))),
+    ('tfidf', TfidfTransformer()),
+    ('clf', CalibratedClassifierCV(base_estimator=clf, cv=5, method='isotonic'))
 ])
 
-scores = cross_val_score(pipeline, X_train, y_train, cv=6, n_jobs=-1)
+scores = cross_val_score(pipeline, X_train, y_train, cv=5, n_jobs=-1)
 print("score: {:.2f}%".format(sum(scores)/len(scores)*100))
