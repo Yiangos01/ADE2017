@@ -16,9 +16,7 @@ from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 from sklearn.decomposition import PCA
 from sklearn.ensemble import ExtraTreesClassifier
-def build_data_frame(file_name,cat):
-	count_cat=0
-	count=0
+def build_data_frame(file_name):
 	with open(file_name,'rb') as tweets:	
 		firstline=True
 		topics=[]
@@ -30,51 +28,21 @@ def build_data_frame(file_name,cat):
 				topic=topic.strip().split('\t')
 				features=topic[2:]
 				if topic[1] == 'live events':
-					if count<=count_cat or topic[1]==cat:
-						if topic[1]==cat:
-							count_cat+=1
-	          					rows.append({"features":features,"category":1})
-							topics.append(topic[0])
-						else:
-							count+=1
-	          					rows.append({"features":features,"category":0})
-							topics.append(topic[0])
+          				rows.append({"features":features,"category":0})
         			elif topic[1] == 'group interest':
-          				if count<=count_cat or topic[1]==cat :
-						if topic[1]==cat:
-							count_cat+=1
-	          					rows.append({"features":features,"category":1})
-							topics.append(topic[0])
-						else:
-							count+=1
-	          					rows.append({"features":features,"category":0})
-							topics.append(topic[0])
+          				rows.append({"features":features,"category":1})
         			elif topic[1] == 'news':
-            				if count<=count_cat or topic[1]==cat:
-						if topic[1]==cat:
-							count_cat+=1
-	          					rows.append({"features":features,"category":1})
-							topics.append(topic[0])
-						else:
-							count+=1
-	          					rows.append({"features":features,"category":0})
-							topics.append(topic[0])
+            				rows.append({"features":features,"category":2})
        				elif topic[1] == 'commemoratives':
-            				if count<=count_cat or topic[1]==cat:
-						if topic[1]==cat:
-							count_cat+=1
-	          					rows.append({"features":features,"category":1})
-							topics.append(topic[0])
-						else:
-							count+=1
-	          					rows.append({"features":features,"category":0})
-							topics.append(topic[0])
+            				rows.append({"features":features,"category":3})
+					
+				topics.append(topic[0])
 		dataframe = DataFrame(rows,index=topics)
 	return dataframe
 
 if __name__=='__main__':
 
-	data=build_data_frame('features_data2.csv','live events')
+	data=build_data_frame('features_data2.csv')
 	data=data.sample(frac=1) #shuffle dataset
 	feature = data['features'].values
 	categories = data['category'].values
@@ -87,11 +55,11 @@ if __name__=='__main__':
 		count+=1
 	features=pd.DataFrame(features)
 	#normalize data
-	scaler = MinMaxScaler(feature_range=(0,10))
+	scaler = MinMaxScaler(feature_range=(1,10))
 	features = scaler.fit_transform(features)
 
 	#feature selection
-	test = SelectKBest(k=8)
+	test = SelectKBest(k=10)
 	fit = test.fit(features, categories)
 	features = fit.transform(features)
 	
@@ -103,11 +71,11 @@ if __name__=='__main__':
 	#print train_x[0]
 	#print (train_y)
 	#print(str(len(x_train))+'\t'+str(len(x_test))+'\t'+str(len(y_train))+'\t'+str(len(y_test)))
-	#clf=OneVsRestClassifier(svm.SVC(kernel='rbf',gamma=0.01,C=100,max_iter=-1,class_weight='balanced'))
-	clf=svm.SVC(kernel='rbf',gamma=0.001,C=100,max_iter=-1)
+	#clf=svm.SVC(kernel='rbf',gamma=0.01,C=100,max_iter=-1)
+	#clf=svm.SVC(kernel='rbf',gamma=0.001,C=100,max_iter=-1)
 	#clf=svm.SVR(
 	#clf=svm.LinearSVC(max_iter=-1,class_weight='balanced')
-	#clf=RandomForestClassifier(n_estimators=250)
+	clf=RandomForestClassifier(n_estimators=200)
 	#clf=ExtraTreesClassifier(n_estimators=30)
 	clf.fit(train_x,train_y)
 	#score=cross_val_score(clf,features,categories,cv=6)
@@ -119,4 +87,6 @@ if __name__=='__main__':
 	#print prediction
 	print score
 
-	
+
+
+
