@@ -2,6 +2,12 @@
 ## Data mining on twitter - ADE2016 
 ## Yiangos Georgiou
 #
+### 
+### 3/4/2017-10/4/2017
+    * visualize sentiment(recognize differences between categories)
+    * research on how to categorize tweets using both text and features
+### 26/3/2017-2/4/2017
+    * SVM optimization(feature selection,preprocessing techniques)
 ### 16/3/2017-25/3/2017
     * feature based classification(SVM)
     * Nayve bayes optimization
