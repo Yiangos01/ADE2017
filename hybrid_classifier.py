@@ -24,12 +24,13 @@ import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.linear_model import SGDClassifier,LogisticRegression
 
+common_dictionary=['a','for','what','like','me','you','we','do','have','had','did','who','how','good','fine','morning','night','now','too'
+,'i','you','if','of','it','the','to','on','this','with','is','off','not','its','be','best','every','no','but','by','our','when','up','out','so'
+,'my','more','from','is','are','in','that','does','where','could','us','just','can','thank','thanks','also','and','very','never','her','much']
 
 #Create a dataframe which in the first column contains the text and in the second the category
 def build_data_frame(file_name):
-	common_dictionary=['a','for','what','like','me','you','we','do','have','had','did','who','how','good','fine','morning','night','now','too'
-,'i','you','if','of','it','the','to','on','this','with','is','off','not','its','be','best','every','no','but','by','our','when','up','out','so'
-,'my','more','from','is','are','in','that','does','where','could','us','just','can','thank','thanks','also','and','very','never','her','much']
+	
 	with open(file_name,'rb') as tweets:	
 		firstline=True
 		firsttopic=True
@@ -39,6 +40,7 @@ def build_data_frame(file_name):
 		topics2=[]
 		rows1=[]
 		rows2=[]
+		list1=[]
 		for tweet in tweets:
 			line1=[]
 			if firstline:
@@ -50,20 +52,14 @@ def build_data_frame(file_name):
 					prevtopic=fields[14]
 					firsttopic=False
       	 			line = fields[5]
-				line = line.replace("rt", "")
-				line = line.replace("RT", "")
 		 	       	line = re.sub(r"http\S+", "", line)
 				line = re.sub(r"([!.'():,?%]+)", " ", line)
 				line = re.sub(r"https\S+", "", line)
 		       		line = re.sub(r"(@[a-zA-Z0-9_]+)", "", line)
 		       		line = re.sub(r"([0-9]+)", "", line)
 		       		line = line.lower()
+				line = line.replace("rt", "")
 	  	     		line = re.sub(r"(.)\1{1,}", r"\1\1", line)
-				text = line.strip().split()
-				for word in text:
-					if word not in common_dictionary:
-						line1.append(word)
-				line=' '.join(line1)
 				if prevtopic != fields[14] and flag:
 					flag=False
 					prevtopic=fields[14]
@@ -100,35 +96,36 @@ class Sentiment(BaseEstimator, TransformerMixin):
 
 	def transform(self, data):
 		#return [{'hash': float(fea[0]),'url': float(fea[1]),'retweeted': float(fea[2]),'retweet': float(fea[4]),'favorite': float(fea[5]),'neg': float(fea[9]),'neu': float(fea[10]),'pos': float(fea[11]),'compound': float(fea[12])}for fea in data]
-		
-		return [{'hash': float(fea[0]),'url': float(fea[1]),'retweet': float(fea[4]),'neg': float(fea[9]),'pos': float(fea[11])}for fea in data]
+		return [{'hash': float(fea[0]),'neg': float(fea[9]),'neu': float(fea[10]),'pos': float(fea[11]),'compound': float(fea[12])+1}for fea in data]
 
 
 if __name__=='__main__':
-	data=build_data_frame('new.csv')
-	clf=LogisticRegression()
+	data=build_data_frame('data.csv')
+	#clf=SGDClassifier(n_jobs = -1, n_iter = 100, eta0=0.1)
+	#clf=OneVsRestClassifier(svm.SVC(kernel='rbf',gamma=0.001,C=100,max_iter=-1))
+	clf=MultinomialNB()
 	pipeline = Pipeline([	
 			('features', FeatureUnion(
 				transformer_list=[
 					('sentiment',Pipeline([
-						('selector',ItemSelector(key='features')),
+						('selector',ItemSelector(key='features')),#Select numerical values
 						('sentiment',Sentiment()),
-						('vect',DictVectorizer())
+						('vect',DictVectorizer())		  #Transforms lists of feature-value mapping to vectors
 					])),
 					('text',Pipeline([
-						('selector',ItemSelector(key='text')),
-						('tfidf', TfidfVectorizer())	
+						('selector',ItemSelector(key='text')),    #Select text values
+						('tfidf', TfidfVectorizer(min_df=3))      #countVectorizer followed by TfidfTransformer	
 			  		]))
 	
 				],
 			
 			transformer_weights={
-				'sentiment':1,
-				'text':0.7,
+				'sentiment':1.5,
+				'text':1,
 				},
 			)),
-			('classifier',LogisticRegression())
-			#('classifier',SGDClassifier( loss='modified_huber', eta0=0.1, fit_intercept=True,learning_rate='invscaling', penalty='l2'))
+			('classifier',clf)
+			
 		])
 	
 	#Cross-Validating 
@@ -141,11 +138,7 @@ if __name__=='__main__':
 
 		test_text = data.iloc[test_ind]
 		test_y= data.iloc[test_ind]['category']
-		
-		
-		#print train_text
-		print len(train_text)
-		print len(train_y)
+		print "ok"
 		pipeline.fit(train_text,train_y)
 		predictions = pipeline.predict(test_text)
 		#predictions = pipeline.predict(test_text)
