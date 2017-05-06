@@ -15,13 +15,13 @@ def build_data_frame(file_name):
 				topic=topic.strip().split('\t')
 				features=topic[2:]
 				if topic[1] == 'live events':
-          				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"senti":features[13],"category":0})
+          				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"neg":features[13],"neu":features[14],"pos":features[15],"compound":features[16],"category":0})
         			elif topic[1] == 'group interest':
-          				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"senti":features[13],"category":1})
+          				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"neg":features[13],"neu":features[14],"pos":features[15],"compound":features[16],"category":1})
         			elif topic[1] == 'news':
-            				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"senti":features[13],"category":2})
+            				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"neg":features[13],"neu":features[14],"pos":features[15],"compound":features[16],"category":2})
        				elif topic[1] == 'commemoratives':
-            				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"senti":features[13],"category":3})
+            				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"neg":features[13],"neu":features[14],"pos":features[15],"compound":features[16],"category":3})
 					
 				topics.append(topic[0])
 		dataframe = DataFrame(rows,index=topics)
@@ -36,10 +36,10 @@ if __name__=='__main__':
 	#scaler = MinMaxScaler(feature_range=(0,10))
 	
 	scaler = Normalizer()
-	data=scaler.fit_transform(data1.astype(float))
+	data=scaler.transform(data1.astype(float))
 	data = DataFrame(data1)
 	data.columns = list(data1.columns.values)
-
+	print data
 	# demonstrate how to toggle the display of different elements:
 	live_data1 = data.loc[data['category'] == 0]
 	group_data1 = data.loc[data['category'] == 1]
@@ -73,8 +73,8 @@ if __name__=='__main__':
 	for feature in group_data[1:]:
 		fig = plt.figure()
 		ax = fig.add_subplot(111)
-		ax.boxplot([live_data[feature].astype(float),group_data[feature].astype(float),news_data[feature].astype(float),com_data[feature].astype(float)],labels=labels)
-		ax.set_title(feature, fontsize=fs)s
+		ax.boxplot([live_data[feature].astype(float),group_data[feature].astype(float),news_data[feature].astype(float),com_data[feature].astype(float)])
+		ax.set_title(feature, fontsize=fs)
 
 	plt.show()
 

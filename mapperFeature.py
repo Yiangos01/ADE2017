@@ -69,12 +69,11 @@ for row in csvreader:
 	try:
 		listText.remove('rt')
 	except ValueError:
-		print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (topic,category,lang,listText,row[4],row[8],reDepth,reRatio,hashtags,length,exla,quest,link,topicRep,row[15])
+		print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (topic,category,lang,listText,row[4],row[8],reDepth,reRatio,hashtags,length,exla,quest,link,topicRep,row[15],row[16],row[17],row[18])
 		continue
 	# increase counters
 	#print text row[4]=userid row[8]=1 if is retweeted else 0
 	
-	print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (topic,category,lang,listText,row[4],row[8],reDepth,reRatio,hashtags,length,exla,quest,link,topicRep,row[15])
-	
+	print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (topic,category,lang,listText,row[4],row[8],reDepth,reRatio,hashtags,length,exla,quest,link,topicRep,row[15],row[16],row[17],row[18])
 	
 

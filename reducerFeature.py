@@ -9,7 +9,7 @@ current_topic = None
 current_count = 0
 total_tweets=0
 total_sent=0
-aver_depth=aver_ratio=aver_hastags=aver_length=aver_exla=aver_quest=aver_link=aver_topicRep=aver_sentiment=0
+aver_depth=aver_ratio=aver_hastags=aver_length=aver_exla=aver_quest=aver_link=aver_topicRep=aver_sentiment=aver_neg=aver_pos=aver_neu=aver_compound=0
 word = None
 Dictionary_users = {}
 Dictionary_retweeted = {}
@@ -36,7 +36,7 @@ for line in sys.stdin:
     # remove leading and trailing whitespace
     line = line.strip()
     # parse the input we got from mapper.py
-    topic,cat,lang,text,user,retweeted,reDepth,reRatio,hashtags,length,exla,quest,link,topicRep,sentiment = line.split('\t')
+    topic,cat,lang,text,user,retweeted,reDepth,reRatio,hashtags,length,exla,quest,link,topicRep,neg,pos,neu,compound = line.split('\t')
     text = re.sub(r"https\S+", "", text)
     text = re.sub(r"http\S+", "", text)
     total_tweets+=1
@@ -44,7 +44,10 @@ for line in sys.stdin:
     #print text
     # convert count (currently a string) to int
     try:
-	sentiment=float(sentiment)
+	neg=float(neg)
+	pos=float(pos)
+	neu=float(neu)
+	compound=float(compound)
         reDepth=float(reDepth)
 	reRatio=float(reRatio)
 	hashtags=float(hashtags)
@@ -63,7 +66,10 @@ for line in sys.stdin:
     # by key (here: word) before it is passed to the reducer
     if current_topic == topic:
 	#metrices
-	aver_sentiment+=sentiment
+	aver_neg+=neg
+	aver_pos+=pos
+	aver_neu+=neu
+	aver_compound+=compound
         aver_depth+=reDepth
 	aver_ratio+=reRatio
 	aver_hastags+=hashtags
@@ -161,13 +167,16 @@ for line in sys.stdin:
 
 		
 		try :
-			print '%s\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f' % (topic,cat,aver_depth/total_tweets,aver_ratio/total_tweets,aver_hastags/total_tweets,aver_length/total_tweets,aver_exla/total_tweets,aver_quest/total_tweets,aver_link/total_tweets,aver_topicRep/total_tweets,users_diver,retweeted_diver,hashtags_diver,words_diver,lang_diver,aver_sentiment/total_tweets)
+			print '%s\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f' % (topic,cat,aver_depth/total_tweets,aver_ratio/total_tweets,aver_hastags/total_tweets,aver_length/total_tweets,aver_exla/total_tweets,aver_quest/total_tweets,aver_link/total_tweets,aver_topicRep/total_tweets,users_diver,retweeted_diver,hashtags_diver,words_diver,lang_diver,aver_neg/total_tweets,aver_neu/total_tweets,aver_pos/total_tweets,aver_compound/total_tweets)
 		except ZeroDivisionError or TypeError:	
 			a=1
 			
 		
 		#initiate values for new topic
-		aver_sentiment=sentiment	
+		aver_neg=neg
+		aver_pos=pos
+		aver_neu=neu
+		aver_compound=compound	
        		aver_depth=reDepth
 		aver_ratio=reRatio
 		aver_hastags=hashtags
@@ -197,7 +206,7 @@ for line in sys.stdin:
 #last word!
 if current_topic.lower() == topic.lower():
 	try :
-		print '%s\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f' % (topic,cat,aver_depth/total_tweets,aver_ratio/total_tweets,aver_hastags/total_tweets,aver_length/total_tweets,aver_exla/total_tweets,aver_quest/total_tweets,aver_link/total_tweets,aver_topicRep/total_tweets,users_diver,retweeted_diver,hashtags_diver,words_diver,lang_diver,aver_sentiment/total_tweets)
+		print '%s\t%s\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f' % (topic,cat,aver_depth/total_tweets,aver_ratio/total_tweets,aver_hastags/total_tweets,aver_length/total_tweets,aver_exla/total_tweets,aver_quest/total_tweets,aver_link/total_tweets,aver_topicRep/total_tweets,users_diver,retweeted_diver,hashtags_diver,words_diver,lang_diver,aver_neg/total_tweets,aver_neu/total_tweets,aver_pos/total_tweets,aver_compound/total_tweets)
 	except ZeroDivisionError or TypeError:	
 		user="a"
 		
