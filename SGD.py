@@ -18,7 +18,7 @@ X_train = []
 y_train = []
 target_names = ['live events', 'group interest', 'news', 'commemoratives']
 
-with open('dataset.csv','rb') as tweets:
+with open('data.csv','rb') as tweets:
     firstline=True
     for tweet in tweets:
 	if firstline:
@@ -34,23 +34,21 @@ with open('dataset.csv','rb') as tweets:
         	text = re.sub(r"(@[a-zA-Z0-9_]+)", "", text)
         	text = re.sub(r"([0-9]+)", "", text)
         	text = re.sub(r"(.)\1{1,}", r"\1\1", text)
-        	if fields[1] == 'live events':
+        	if fields[1] == target_names[0]:
           		y_train.append(0)
-        	elif fields[1] == 'group interest':
+        	elif fields[1] == target_names[1]:
           		y_train.append(1)
-        	elif fields[1] == 'news':
+        	elif fields[1] == target_names[2]:
             		y_train.append(2)
-       		elif fields[1] == 'commemoratives':
+       		elif fields[1] == target_names[3]:
             		y_train.append(3)
         	X_train.append(text)
 
 
-clf = SGDClassifier(n_jobs = -1, n_iter = 80, loss='modified_huber', eta0=0.1, fit_intercept=True, 
-  l1_ratio=0.01523666894628084, learning_rate='invscaling', penalty='L1', power_t=0.3781882994744936, epsilon=0.43278936855286376, alpha=0.4151963461780298)
+clf = SGDClassifier(n_jobs = -1, n_iter = 100, eta0=0.74)
 
 pipeline = Pipeline([
     ('vectorizer', HashingVectorizer(non_negative=True,n_features=(2 ** 18))),
-    ('tfidf', TfidfTransformer()),
     ('clf', CalibratedClassifierCV(base_estimator=clf, cv=5, method='isotonic'))
 ])
 
