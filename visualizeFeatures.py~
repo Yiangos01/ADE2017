@@ -15,13 +15,13 @@ def build_data_frame(file_name):
 				topic=topic.strip().split('\t')
 				features=topic[2:]
 				if topic[1] == 'live events':
-          				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"neg":features[13],"neu":features[14],"pos":features[15],"compound":features[16],"category":0})
-        			elif topic[1] == 'group interest':
           				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"neg":features[13],"neu":features[14],"pos":features[15],"compound":features[16],"category":1})
+        			elif topic[1] == 'group interest':
+          				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"neg":features[13],"neu":features[14],"pos":features[15],"compound":features[16],"category":2})
         			elif topic[1] == 'news':
-            				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"neg":features[13],"neu":features[14],"pos":features[15],"compound":features[16],"category":2})
-       				elif topic[1] == 'commemoratives':
             				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"neg":features[13],"neu":features[14],"pos":features[15],"compound":features[16],"category":3})
+       				elif topic[1] == 'commemoratives':
+            				rows.append({"depth":features[0],"ratio":features[1],"hashtags":features[2],"length":features[3],"exla":features[4],"quest":features[5],"link":features[6],"topicRep":features[7],"users_d":features[8],"retweeted_d":features[9],"hashtags_d":features[10],"words_d":features[11],"lang_d":features[12],"neg":features[13],"neu":features[14],"pos":features[15],"compound":features[16],"category":4})
 					
 				topics.append(topic[0])
 		dataframe = DataFrame(rows,index=topics)

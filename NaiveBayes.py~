@@ -69,7 +69,7 @@ if __name__=='__main__':
 				('classifier',MultinomialNB())
 			   ])
 	#Cross-Validating 
-	kfold = KFold(n=len(data),n_folds=6)
+	kfold = KFold(n=len(data),n_folds=8)
 	scores = []
 	for train_ind,test_ind in kfold:
 		train_text = data.iloc[train_ind]['text'].values
