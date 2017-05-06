@@ -131,7 +131,7 @@ if __name__=='__main__':
 	#print (train_y6
 	#print(str(len(x_train))+'\t'+str(len(x_test))+'\t'+str(len(y_train))+'\t'+str(len(y_test)))
 	#clf=OneVsRestClassifier(svm.SVC(kernel='rbf',gamma=0.01,C=100,max_iter=-1,class_weight='balanced'))
-	clf=OneVsRestClassifier(svm.SVC(kernel='linear',gamma=0.001,C=100,max_iter=-1))
+	#clf=OneVsRestClassifier(svm.SVC(kernel='linear',gamma=0.001,C=100,max_iter=-1))
 	#clf=svm.SVR(
 	#clf=svm.LinearSVC(max_iter=-1,class_weight='balanced')
 	#clf=OneVsRestClassifier(RandomForestClassifier(n_estimators=450,class_weight='balanced',min_samples_split=4))
