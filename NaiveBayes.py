@@ -22,6 +22,7 @@ def build_data_frame(file_name):
 		topics2=[]
 		rows1=[]
 		rows2=[]
+		line1=[]
 		for tweet in tweets:
 			if firstline:
 				firstline=False
@@ -58,7 +59,7 @@ def build_data_frame(file_name):
 	return pd.concat([dataframe2,dataframe1])
 
 if __name__=='__main__':
-	data=build_data_frame('dataset.csv')
+	data=build_data_frame('data.csv')
 	#data=data.groupby(['topics'],as_index=False).sum()
 	#data = shuffle(data)
 	print data
@@ -68,7 +69,7 @@ if __name__=='__main__':
 				('classifier',MultinomialNB())
 			   ])
 	#Cross-Validating 
-	kfold = KFold(n=len(data),n_folds=8)
+	kfold = KFold(n=len(data),n_folds=6)
 	scores = []
 	for train_ind,test_ind in kfold:
 		train_text = data.iloc[train_ind]['text'].values
@@ -83,5 +84,5 @@ if __name__=='__main__':
 		score = accuracy_score(test_y, predictions)
 		print score
 		scores.append(score)
-print ("Score: {:.2f}".format(sum(scores[2:])/len(scores[2:])))
+print ("Score: {:.2f}".format(sum(scores[1:])/len(scores[1:])))
 	
