@@ -12,15 +12,18 @@ from sklearn.model_selection import cross_val_score
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.linear_model import SGDClassifier
+from nltk.stem.porter import PorterStemmer 
 ###############################################################################
 
 X_train = []
 y_train = []
 target_names = ['live events', 'group interest', 'news', 'commemoratives']
 
-with open('data.csv','rb') as tweets:
+with open('bb.csv','rb') as tweets:
     firstline=True
+    stemmer=PorterStemmer()
     for tweet in tweets:
+	line1=[]
 	if firstline:
 		firstline=False
 	else:
@@ -34,6 +37,17 @@ with open('data.csv','rb') as tweets:
         	text = re.sub(r"(@[a-zA-Z0-9_]+)", "", text)
         	text = re.sub(r"([0-9]+)", "", text)
         	text = re.sub(r"(.)\1{1,}", r"\1\1", text)
+		text=text.decode("utf-8")
+		if fields[9]=="en":
+			text=text.encode("ascii","ignore")
+		text=text.strip().split()
+		for word in text:
+			try:
+				line1.append(stemmer.stem(word))
+			except:
+				print (word)
+		text=line1				
+		text=' '.join(text)
         	if fields[1] == target_names[0]:
           		y_train.append(0)
         	elif fields[1] == target_names[1]:
@@ -45,7 +59,7 @@ with open('data.csv','rb') as tweets:
         	X_train.append(text)
 
 
-clf = SGDClassifier(n_jobs = -1, n_iter = 100, eta0=0.74)
+clf = SGDClassifier(n_jobs = -1, n_iter = 100, eta0=0.1)
 
 pipeline = Pipeline([
     ('vectorizer', HashingVectorizer(non_negative=True,n_features=(2 ** 18))),
@@ -54,3 +68,4 @@ pipeline = Pipeline([
 
 scores = cross_val_score(pipeline, X_train, y_train, cv=5, n_jobs=-1)
 print("score: {:.2f}%".format(sum(scores)/len(scores)*100))
+print(scores)
