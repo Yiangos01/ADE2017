@@ -9,11 +9,13 @@ from sklearn.pipeline import Pipeline
 from sklearn.cross_validation import KFold
 from sklearn.metrics import accuracy_score
 from sklearn.utils import shuffle
+<<<<<<< HEAD
 from nltk.stem.porter import PorterStemmer 
 
 #Create a dataframe which in the first column contains the text and in the second the category
 def build_data_frame(file_name):
 	stemmer=PorterStemmer()
+
 	with open(file_name,'rb') as tweets:	
 		firstline=True
 		firsttopic=True
@@ -43,18 +45,7 @@ def build_data_frame(file_name):
 		       		line = line.lower()
 	  	     		line = re.sub(r"(.)\1{1,}", r"\1\1", line)
 				line = line.strip()
-				line=line.decode("utf-8")
-				if fields[9]=="en":
-					line=line.encode("ascii","ignore")
-				line=line.strip().split()
-				for word in line:
-					try:
-						line1.append(stemmer.stem(word))
-					except:
-						print word
-				
-				line=line1				
-				line=' '.join(line)
+
 				if prevtopic != fields[14] and flag:
 					flag=False
 					prevtopic=fields[14]
@@ -73,6 +64,7 @@ def build_data_frame(file_name):
 
 if __name__=='__main__':
 	data=build_data_frame('bb.csv')
+
 	#data=data.groupby(['topics'],as_index=False).sum()
 	#data = shuffle(data)
 	print data
@@ -97,5 +89,5 @@ if __name__=='__main__':
 		score = accuracy_score(test_y, predictions)
 		print score
 		scores.append(score)
+
 print ("Score: {:.2f}".format(sum(scores[1:])/len(scores[1:])*100))
-	
