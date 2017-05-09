@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 # -*- coding: utf-8 -*-
+=======
+>>>>>>> origin
 import nltk
 import string 
 import csv
@@ -8,8 +11,12 @@ from itertools import product
 from inspect import getsourcefile
 from os.path import abspath, join, dirname
 import pandas as pd
+<<<<<<< HEAD
 import re
 import string
+=======
+
+>>>>>>> origin
 ##Constants##
 
 # (empirically derived mean sentiment intensity rating increase for booster words)
@@ -437,6 +444,7 @@ class SentimentIntensityAnalyzer(object):
 
         return sentiment_dict
 ##BeingMaryJane LiveEvents, #BlackAdam news, #CCR17 news,#CookSchoolGBC liveEvents
+<<<<<<< HEAD
 #['#2Awesome','#bbcaq','#bbcfootball','#BeerBods','#BeingMaryJane','#BernieEcclestone','#Bett2017','#bettchat','#BigWeekend','#BlackAdam','#CCR17',
 #'#CheckatradeTrophy','#Concentrix','#CookSchoolGBC'
 if __name__ == '__main__':
@@ -470,7 +478,7 @@ if __name__ == '__main__':
 					quest=1
 				# Length
 				length=len(tweet[5])
-				#print '\t'.join(str(x) for x in list(tweet))+"\t"+str(vs['neg'])+"\t"+str(vs['neu'])+"\t"+str(vs['pos'])+"\t"+str(vs['compound'])+"\t"+str(quest)+"\t"+str(exla)+"\t"+str(length)
+				print '\t'.join(str(x) for x in list(tweet))+"\t"+str(vs['neg'])+"\t"+str(vs['neu'])+"\t"+str(vs['pos'])+"\t"+str(vs['compound'])+"\t"+str(quest)+"\t"+str(exla)+"\t"+str(length)
 
 
 
