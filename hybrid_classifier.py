@@ -25,6 +25,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.linear_model import SGDClassifier,LogisticRegression
 from nltk.stem.porter import PorterStemmer 
 
+
 common_dictionary=['a','for','what','like','me','you','we','do','have','had','did','who','how','good','fine','morning','night','now','too'
 ,'i','you','if','of','it','the','to','on','this','with','is','off','not','its','be','best','every','no','but','by','our','when','up','out','so'
 ,'my','more','from','is','are','in','that','does','where','could','us','just','can','thank','thanks','also','and','very','never','her','much']
@@ -32,6 +33,8 @@ common_dictionary=['a','for','what','like','me','you','we','do','have','had','di
 #Create a dataframe which in the first column contains the text and in the second the category
 def build_data_frame(file_name):
 	stemmer= PorterStemmer()
+
+
 	with open(file_name,'rb') as tweets:	
 		firstline=True
 		firsttopic=True
@@ -61,7 +64,7 @@ def build_data_frame(file_name):
 		       		line = line.lower()
 				line = line.replace("rt", "")
 	  	     		line = re.sub(r"(.)\1{1,}", r"\1\1", line)
-				
+
 				if prevtopic != fields[14] and flag:
 					flag=False
 					prevtopic=fields[14]
@@ -77,6 +80,7 @@ def build_data_frame(file_name):
 		dataframe1 = DataFrame(rows1,index=topics1)
 		dataframe2 = DataFrame(rows2,index=topics2)
 	return pd.concat([dataframe2,dataframe1])
+
 
 def norm(val):
 	if val==0:
@@ -109,16 +113,19 @@ class Sentiment(BaseEstimator, TransformerMixin):
 
 	def transform(self, data):
 		#return [{'hash': float(fea[0]),'url': float(fea[1]),'retweeted': float(fea[2]),'retweet': float(fea[4]),'favorite': float(fea[5]),'neg': float(fea[9]),'neu': float(fea[10]),'pos': float(fea[11]),'compound': float(fea[12])}for fea in data]
+<<<<<<< HEAD
 		return [{'hash': float(fea[0]),'url': float(fea[1]),'neg':float(fea[9]),'neu': float(fea[10][:4]),'pos': float(fea[11][:4]),'exla':float(fea[13]),'quest':float(fea[14])}for fea in data]
 
 
 	
 
+
 if __name__=='__main__':
-	data=build_data_frame('new.csv')
-	clf=SGDClassifier(n_jobs = -1, n_iter = 100, eta0=0.1)
+	data=build_data_frame('data.csv')
+	#clf=SGDClassifier(n_jobs = -1, n_iter = 100, eta0=0.1)
 	#clf=OneVsRestClassifier(svm.SVC(kernel='rbf',gamma=0.001,C=100,max_iter=-1))
-	#clf=MultinomialNB()
+	clf=MultinomialNB()
+
 	pipeline = Pipeline([	
 			('features', FeatureUnion(
 				transformer_list=[
@@ -129,8 +136,9 @@ if __name__=='__main__':
 					])),
 					('text',Pipeline([
 						('selector',ItemSelector(key='text')),    #Select text values
+
 						('tfidf', TfidfVectorizer())      	  #countVectorizer followed by TfidfTransformer	
-			  		]))
+	  		]))
 	
 				],
 			
@@ -140,7 +148,7 @@ if __name__=='__main__':
 				},
 			)),
 			('classifier',CalibratedClassifierCV(base_estimator=clf, cv=5, method='isotonic'))
-			
+	
 		])
 	
 	#Cross-Validating 
@@ -153,7 +161,7 @@ if __name__=='__main__':
 
 		test_text = data.iloc[test_ind]
 		test_y= data.iloc[test_ind]['category']
-	
+
 		pipeline.fit(train_text,train_y)
 		predictions = pipeline.predict(test_text)
 		#predictions = pipeline.predict(test_text)
@@ -162,5 +170,7 @@ if __name__=='__main__':
 		print score
 		scores.append(score)
 #	print scores
+
 	print ("Score: {:.2f}".format(((sum(scores[1:])/len(scores[1:]))*100)))
+
 	
