@@ -3,6 +3,11 @@
 ## Yiangos Georgiou
 #
 ### 
+### 30/4/2017-*
+    * thesis
+    * presentation
+### 11/4/2017-28/4/2017
+    * hybrid classifier implementation
 ### 3/4/2017-10/4/2017
     * visualize sentiment(recognize differences between categories)
     * research on how to categorize tweets using both text and features
