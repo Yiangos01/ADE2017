@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import nltk
 import string 
 import csv
@@ -7,7 +8,8 @@ from itertools import product
 from inspect import getsourcefile
 from os.path import abspath, join, dirname
 import pandas as pd
-
+import re
+import string
 ##Constants##
 
 # (empirically derived mean sentiment intensity rating increase for booster words)
@@ -435,32 +437,40 @@ class SentimentIntensityAnalyzer(object):
 
         return sentiment_dict
 ##BeingMaryJane LiveEvents, #BlackAdam news, #CCR17 news,#CookSchoolGBC liveEvents
+#['#2Awesome','#bbcaq','#bbcfootball','#BeerBods','#BeingMaryJane','#BernieEcclestone','#Bett2017','#bettchat','#BigWeekend','#BlackAdam','#CCR17',
+#'#CheckatradeTrophy','#Concentrix','#CookSchoolGBC'
 if __name__ == '__main__':
-	exclude=['#2Awesome','#bbcaq','#bbcfootball','#BeerBods','#BeingMaryJane','#BernieEcclestone','#Bett2017','#bettchat','#BigWeekend','#BlackAdam','#CCR17',
-'#CheckatradeTrophy','#Concentrix','#CookSchoolGBC']#['#4HSepang','#Advtravelconf','#AJBellNBL','#All80sHour','#andersonprog','#arcgap','#archantawards','#BBCIntroducingOnRadioWales','#BestFans2017',
-#'#bloggersbookfeast','#botchedupbodies','#brainwashingstacey','#BritainsBenefitTenants','#C4PopUp','#CBBStacey','#ccvideo','#cdfcouncil','#cfginvest17',
-#'#CleggQMUL','#cmawards16','#CookSchoolGBC','#covhour','#creativeshootout17','#CremeEggHuntingSeason','#diaries17','#DisruptionSWT','#diversetv','#DolanTwinsNewVideo',
-#'#eastawardsni','#ENLScores','#ESRCRacisms','#FashionRules','#Fidelio','#FreedomsRoad','#GetYourTattsOut','#GSFestivals','#heavenclubspa','#homelesssunday',
-#'#IAmLegend','#ifgdirector','#insecttunage','#InspireMBG2017','#itsgoneviral','#ITVBoxing','#kimcarnival','#LateJunction','#loudertogetherlaunch','#LoveSpecies',
-#'#MakeSomeoneSmelly','#MarioKart101','#MarstonGreen','#midlandshour','#MSFTBurnsSupper','#Muskedragons','#NapaSplash2017','#NiNoKuni2','#nogutsnoglory',
-#'#ODEONScreenUnseen','#ODIFridays','#oneshow','#PoemsAboutTrumpAndMay','#producttank','#r4mediashow','#RLhfctor','#RoadsPolice2017','#RSAeducation','#RSALies',
-#'#schoolfunding','#seeyouinthefields','#SGTNN2','#ShakespeareSunday','#silvertowntunnel','#socinnpolicy','#Sportscene','#StDwynwensDay','#stereounderground','#SuperSunday',
-#'#sussexgrad','#TheBigQuestions','#TheresaAndDonald','#ThisMorning','#TrapNominatedLIVE','#TuringLecture','#TW3Awards','#UKCA17','#USdebate','#WesternSecurity','#windinthewillows','#WoolfWorks',
-#'#WordsByCamila','#worldwideawards','Adama Traore','Airdrie Savings Bank','Alex Bray','Andy Welsh','Annie Power','Article 50','Bart McQueen','Cammy Smith','Chris Clements','Danny Murphy','Don Bersy','Fashion Business','Future Islands','Gail Porter','Handsworth','Highs of 5C','Howard Webb','James Bree','Jamie Hanson','Joel Matip','Josh Windass','Kasim','Keith Curle','Lazar Markovic','Leon Barrett-Hazle','Liz Carr','Lord Bracadale','Luke Amos','Marcus Haber','Marston Green','Mason Mount','Members of Muirfield','Michael Bowditch','Munster v Toulouse','Napoli','Niall Keown','Pascal Lamy','Paul Hunter','Premier Bond','Ravel Morrison','Reigate','Sam Billings','Samoa','Scottish Event Campus','Serena Williams','Sir Patrick Coghlin','Str8 Grove','Stuart Findlay','Tommy Fleetwood','Tsonga','Wasps','West Indies in March','Young Progress Makers','HALF TIME'] 
+	exclude2=['#4HSepang','#Advtravelconf','#AJBellNBL','#All80sHour','#andersonprog','#arcgap','#archantawards','#BBCIntroducingOnRadioWales','#BestFans2017',
+'#bloggersbookfeast','#botchedupbodies','#brainwashingstacey','#BritainsBenefitTenants','#C4PopUp','#CBBStacey','#ccvideo','#cdfcouncil','#cfginvest17',
+'#CleggQMUL','#cmawards16','#CookSchoolGBC','#covhour','#creativeshootout17','#CremeEggHuntingSeason','#diaries17','#DisruptionSWT','#diversetv','#DolanTwinsNewVideo',
+'#eastawardsni','#ENLScores','#ESRCRacisms','#FashionRules','#Fidelio','#FreedomsRoad','#GetYourTattsOut','#GSFestivals','#heavenclubspa','#homelesssunday',
+'#IAmLegend','#ifgdirector','#insecttunage','#InspireMBG2017','#itsgoneviral','#ITVBoxing','#kimcarnival','#LateJunction','#loudertogetherlaunch','#LoveSpecies',
+'#MakeSomeoneSmelly','#MarioKart101','#MarstonGreen','#midlandshour','#MSFTBurnsSupper','#Muskedragons','#NapaSplash2017','#NiNoKuni2','#nogutsnoglory',
+'#ODEONScreenUnseen','#ODIFridays','#oneshow','#PoemsAboutTrumpAndMay','#producttank','#r4mediashow','#RLhfctor','#RoadsPolice2017','#RSAeducation','#RSALies',
+'#schoolfunding','#seeyouinthefields','#SGTNN2','#ShakespeareSunday','#silvertowntunnel','#socinnpolicy','#Sportscene','#StDwynwensDay','#stereounderground','#SuperSunday',
+'#sussexgrad','#TheBigQuestions','#TheresaAndDonald','#ThisMorning','#TrapNominatedLIVE','#TuringLecture','#TW3Awards','#UKCA17','#USdebate','#WesternSecurity','#windinthewillows','#WoolfWorks',
+'#WordsByCamila','#worldwideawards','Adama Traore','Airdrie Savings Bank','Alex Bray','Andy Welsh','Annie Power','Article 50','Bart McQueen','Cammy Smith','Chris Clements','Danny Murphy','Don Bersy','Fashion Business','Future Islands','Gail Porter','Handsworth','Highs of 5C','Howard Webb','James Bree','Jamie Hanson','Joel Matip','Josh Windass','Kasim','Keith Curle','Lazar Markovic','Leon Barrett-Hazle','Liz Carr','Lord Bracadale','Luke Amos','Marcus Haber','Marston Green','Mason Mount','Members of Muirfield','Michael Bowditch','Munster v Toulouse','Napoli','Niall Keown','Pascal Lamy','Paul Hunter','Premier Bond','Ravel Morrison','Reigate','Sam Billings','Samoa','Scottish Event Campus','Serena Williams','Sir Patrick Coghlin','Str8 Grove','Stuart Findlay','Tommy Fleetwood','Tsonga','Wasps','West Indies in March','Young Progress Makers','HALF TIME'] 
+	exclude=['DON\'T GO TO SLEEP','Emmanuel Adebayor']
 
 	analyzer = SentimentIntensityAnalyzer()
 	tweets = pd.read_csv('data.csv',sep='\t')
-	print 'name\tcategory\tid\ttweet_id\tuser_id\ttweet_text\thashtags_count\turl_count\tis_retweeted\tlang\tretweet_count\tfavorite_count\tdate\ttime\ttopic\tneg\tneu\tpos\tcompound'
+	print 'name\tcategory\tid\ttweet_id\tuser_id\ttweet_text\thashtags_count\turl_count\tis_retweeted\tlang\tretweet_count\tfavorite_count\tdate\ttime\ttopic\tneg\tneu\tpos\tcompound\tquest\texla\tlength'
 
 	for tweet in tweets.values:
+		to_lang="en"
 		if tweet[14] not in exclude:
 			if 'hour' not in tweet[14].lower():
-				if len(tweet[14].split())>1 or "#" in tweet[14]:
-					vs = analyzer.polarity_scores(tweet[5])
-					print '\t'.join(str(x) for x in list(tweet))+"\t"+str(vs['neg'])+"\t"+str(vs['neu'])+"\t"+str(vs['pos'])+"\t"+str(vs['compound'])
-		else:
-			print '\t'.join(str(x) for x in list(tweet))+"\t"+str(0)+"\t"+str(0)+"\t"+str(0)+"\t"+str(0)
-
+				vs = analyzer.polarity_scores(tweet[5])
+				exla=0
+				if "!" in tweet[5]:
+					exla=1
+				# Question
+				quest=0
+				if "?" in tweet[5]:
+					quest=1
+				# Length
+				length=len(tweet[5])
+				print '\t'.join(str(x) for x in list(tweet))+"\t"+str(vs['neg'])+"\t"+str(vs['neu'])+"\t"+str(vs['pos'])+"\t"+str(vs['compound'])+"\t"+str(quest)+"\t"+str(exla)+"\t"+str(length)
 
 
 
